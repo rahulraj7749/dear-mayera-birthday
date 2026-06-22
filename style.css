@@ -84,7 +84,7 @@ width:100%;
 height:100%;
 left:0;
 top:0;
-background:url("https://i.imgur.com/0Q8YB6P.png");
+backgbackground: transparent;
 opacity:.35;
 animation:moveStars 80s linear infinite;
 pointer-events:none;
