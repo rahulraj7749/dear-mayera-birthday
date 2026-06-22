@@ -1,156 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>To My Dear Bestie, Mayera ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Dear Bestie Mayera ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: linear-gradient(135deg, #f76b1c, #fad961);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            padding: 20px 0;
+        }
+        .screen {
+            width: 88%;
+            max-width: 400px;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+        }
+        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; }
+        p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
+        
+        .btn-link {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+            transition: 0.2s;
+        }
 
-<link rel="stylesheet" href="style.css">
+        #part2, #part3 { display: none; }
+        #part2:target { display: block; }
+        #part2:target ~ #part1 { display: none; }
+        
+        .cake-box { font-size: 80px; margin: 25px 0; position: relative; display: inline-block; }
+        .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
+        
+        /* Personal Letter/Card styling */
+        .letter-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .letter-card h2 { color: #ff416c; text-align: center; margin-bottom: 15px; }
+        .letter-card p { color: #444; margin-bottom: 15px; font-size: 14px; }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+        /* Interactive Big Gift Box */
+        .interactive-gift {
+            font-size: 75px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 10px 0;
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .float-heart { position: absolute; pointer-events: none; bottom: -50px; animation: floatUp 3.5s linear forwards; z-index: 100; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(360deg) scale(1.3); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="loading">
-<h1 class="typing"></h1>
-</div>
+    <div style="width: 100%; display: flex; justify-content: center; align-items: center; position: relative;">
 
-<div class="stars"></div>
-<div class="hearts"></div>
-<div class="balloons"></div>
+        <!-- SCREEN 2: Interactive Cake -->
+        <div class="screen" id="part2">
+            <h2>Make a Wish, Mayera! 🤫</h2>
+            <div class="cake-box">
+                <span class="flame" id="c-flame">🔥</span>🎂
+            </div>
+            <p>Close your eyes, think of a beautiful wish, and click below to open your personal birthday letter!</p>
+            <button onclick="blowCandle()" style="background: linear-gradient(135deg, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);">Blow Candle 🌬️</button>
+        </div>
 
-<section class="hero">
+        <!-- SCREEN 3: Your Saved Personal Letter & Gift Box Box -->
+        <div class="screen" id="part3">
+            <h1>Happy Birthday! 🎉</h1>
+            
+            <!-- AAPKA APNA MESSAGE (Ekdum Surakshit) -->
+            <div class="letter-card">
+                <h2>💖 Dear Bestie Mayera 💖</h2>
+                <p><b>Aaj ka din us dil ke naam,<br>jo har muskaan ke saath<br>duniya ko thoda aur khoobsurat bana deta hai.</b></p>
+                <p>🌹</p>
+                <p>Janamdin ki dher saari shubhkamnayein 🎂✨</p>
+            </div>
+            
+            <!-- TAP ME GIFT BOX FOR HEART ANIMATION -->
+            <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for heart magic! 👇</p>
+            <div class="interactive-gift" onclick="burstHearts()">🎁</div>
+        </div>
 
-<h1 class="title">
-🌸 To My Dear Bestie, Mayera 💖
-</h1>
+        <!-- SCREEN 1: Welcome Greeting -->
+        <div class="screen" id="part1">
+            <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
+            <h2>🎂 Happy 19th Birthday 🎂</h2>
+            <p>Some people make the world brighter just by being in it...<br><br>Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
+            <a href="#part2" class="btn-link" onclick="document.getElementById('part1').style.style.display='none';">✉️ Open Your Surprise</a>
+        </div>
 
-<h2 class="subtitle">
-🎂 Happy 19th Birthday 🎂
-</h2>
+    </div>
 
-<p class="quote">
+    <script>
+        function blowCandle() {
+            document.getElementById('c-flame').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('part2').style.display = 'none';
+                document.getElementById('part3').style.display = 'block';
+                document.body.style.background = "linear-gradient(135deg, #1a0b2e, #0b0416)";
+            }, 600);
+        }
 
-Some people make the world brighter just by being in it...
+        // Tap Gift to burst hearts
+        function burstHearts() {
+            for(let i=0; i<15; i++) {
+                setTimeout(createSingleHeart, i * 60);
+            }
+        }
 
-Today, we celebrate someone truly special —
-
-❤️ My Dear Bestie, Mayera ❤️
-
-</p>
-
-<button onclick="openLetter()">
-💌 Open Your Surprise
-</button>
-
-</section>
-
-<section id="letter" class="letter">
-
-<h2>
-💖 Dear Bestie Mayera 💖
-</h2>
-
-<p>
-
-<b>
-Aaj ka din us dil ke naam,
-jo har muskaan ke saath
-duniya ko thoda aur khoobsurat bana deta hai.
-</b>
-
-🌹
-
-</p>
-
-<p>
-
-Janamdin ki dher saari
-shubhkamnayein 🎂✨
-
-</p>
-
-<p>
-
-Dua hai ki tumhari
-zindagi hamesha
-
-Khushiyon ❤️
-
-Pyaar 💕
-
-Kamyabi 🌸
-
-Aur Haseen Yaadon ✨
-
-se bhari rahe.
-
-</p>
-
-<p>
-
-Har naya din
-ek nayi umeed laaye,
-
-Har subah
-ek nayi muskaan laaye,
-
-Aur har pal
-tumhe khushi hi khushi mile.
-
-</p>
-
-<p>
-
-<b>
-
-May your 19th year
-be filled with
-
-Love ❤️
-
-Success ✨
-
-Beautiful Memories 🌸
-
-Endless Happiness 💖
-
-</b>
-
-</p>
-
-<h2>
-
-🎉 Happy Birthday My Dear Bestie 🎉
-
-💖 Mayera 💖
-
-</h2>
-
-</section>
-
-<section class="music">
-
-<audio controls loop>
-
-<source src="music.mp3">
-
-</audio>
-
-</section>
-
-<footer>
-
-Made with ❤️
-
-Especially for
-
-🌸 My Dear Bestie Mayera 🌸
-
-</footer>
-
-<script src="script.js"></script>
-
+        function createSingleHeart() {
+            const h = document.createElement('div');
+            h.className = 'float-heart';
+            const heartOptions = ['❤️','💖','💝','💘','💕','✨'];
+            h.innerHTML = heartOptions[Math.floor(Math.random() * heartOptions.length)];
+            
+            h.style.left = (15 + Math.random() * 70) + 'vw'; 
+            h.style.fontSize = (Math.random() * 25 + 20) + 'px';
+            h.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+            
+            document.body.appendChild(h);
+            setTimeout(() => { h.remove(); }, 3500);
+        }
+    </script>
 </body>
 </html>
