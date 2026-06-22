@@ -1,44 +1,123 @@
-body{
+*{
 margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#ff9ecf,#b388ff);
-overflow:hidden;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff9ed2,#d7a8ff);
+overflow-x:hidden;
+color:#fff;
+text-align:center;
+}
+
+.hero{
+padding:80px 20px;
+min-height:100vh;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-height:100vh;
 }
-.card{
-background:rgba(255,255,255,.2);
-backdrop-filter:blur(10px);
-padding:25px;
-border-radius:20px;
-text-align:center;
-width:90%;
-max-width:600px;
-color:white;
-box-shadow:0 0 30px rgba(255,255,255,.3);
-animation:float 3s ease-in-out infinite;
+
+.title{
+font-size:42px;
+font-family:'Great Vibes',cursive;
+color:#fff;
+text-shadow:0 0 20px hotpink;
 }
-button{
-padding:12px 22px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-font-size:16px;
-}
-.hidden{display:none;}
-@keyframes float{
-50%{transform:translateY(-8px);}
-}
-.stars::before{
-content:"✨ ✨ ✨ ✨ ✨";
-position:fixed;
-top:10px;
-left:10px;
+
+.subtitle{
+margin-top:15px;
 font-size:28px;
-animation:twinkle 2s infinite;
 }
-@keyframes twinkle{
-50%{opacity:.3;}
+
+.quote{
+margin:25px auto;
+max-width:700px;
+font-size:20px;
+line-height:1.8;
+}
+
+button{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:#ff4fa2;
+color:white;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 0 20px #ff5eb5;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.letter{
+display:none;
+margin:50px auto;
+width:90%;
+max-width:850px;
+padding:35px;
+border-radius:25px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(18px);
+line-height:2;
+font-size:20px;
+}
+
+.music{
+margin:40px;
+}
+
+footer{
+padding:35px;
+font-size:18px;
+}
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+left:0;
+top:0;
+background:url("https://i.imgur.com/0Q8YB6P.png");
+opacity:.35;
+animation:moveStars 80s linear infinite;
+pointer-events:none;
+}
+
+@keyframes moveStars{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-1200px);
+}
+
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:32px;
+}
+
+.subtitle{
+font-size:22px;
+}
+
+.quote{
+font-size:18px;
+}
+
+.letter{
+font-size:18px;
+}
+
 }
