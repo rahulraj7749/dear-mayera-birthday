@@ -110,9 +110,9 @@
 </head>
 <body>
 
-    <!-- DARKHAAST ARIJIT SINGH PIANO INSTRUMENTAL AUDIO SOURCE -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://pub-c5e31b5cdafb419a86a69d5d340a9ade.r2.dev/darkhaast-piano.mp3" type="audio/mpeg">
+    <!-- VISHAL MISHRA - TUM HO TOH (FROM SAIYAARA) HIGH-SPEED MUSIC SOURCE -->
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://pub-c5e31b5cdafb419a86a69d5d340a9ade.r2.dev/tum-ho-toh-saiyaara.mp3" type="audio/mpeg">
     </audio>
 
     <canvas id="cinematicCanvas"></canvas>
@@ -185,7 +185,11 @@
 
         function startMission1() {
             const music = document.getElementById('bgMusic');
-            music.play().catch(err => console.log("Audio playing..."));
+            music.play().then(() => {
+                console.log("Tum Ho Toh track live!");
+            }).catch(err => {
+                console.log("Audio ready");
+            });
             
             nextScreen('scr1', 'scr2');
             balloonInterval = setInterval(spawnGameBalloon, 800);
