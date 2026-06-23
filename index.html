@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To My Dear Bestie Mayera ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -17,27 +17,40 @@
             font-family: 'Poppins', sans-serif;
             color: #fff;
             padding: 20px 0;
+            position: relative;
         }
+        
+        /* Glowing Stars Background */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px #fad961;
+            animation: blink 2s infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
+
         .screen {
-            width: 88%;
+            width: 90%;
             max-width: 400px;
             text-align: center;
-            padding: 30px 20px;
+            padding: 25px 20px;
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
         }
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 38px;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
         }
         h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; }
-        p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
+        p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
         
         .btn-link {
             display: block;
@@ -51,7 +64,7 @@
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5);
             transition: 0.2s;
         }
 
@@ -62,36 +75,57 @@
         .cake-box { font-size: 80px; margin: 25px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
         
-        /* Personal Letter/Card styling */
+        /* Screenshot Aesthetic Card Styling */
         .letter-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: #fbf9f6;
             color: #333;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: left;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            text-align: center;
             margin-bottom: 20px;
+            border: 1px solid #eee;
         }
-        .letter-card h2 { color: #ff416c; text-align: center; margin-bottom: 15px; }
-        .letter-card p { color: #444; margin-bottom: 15px; font-size: 14px; }
+        .letter-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 45px;
+            color: #111;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .letter-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: #222;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+        }
 
-        /* Interactive Big Gift Box */
+        /* Bouncing Gift Box */
         .interactive-gift {
-            font-size: 75px;
+            font-size: 85px;
             cursor: pointer;
             display: inline-block;
             margin: 10px 0;
-            animation: bounce 1s infinite alternate;
+            animation: bounce 0.8s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            transition: transform 0.1s;
         }
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
+        .interactive-gift:active { transform: scale(0.85); }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
 
-        .float-heart { position: absolute; pointer-events: none; bottom: -50px; animation: floatUp 3.5s linear forwards; z-index: 100; }
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translateY(-115vh) rotate(360deg) scale(1.3); opacity: 0; }
+        /* Heart Magic Burst Elements */
+        .magic-heart { 
+            position: absolute; 
+            pointer-events: none; 
+            bottom: 20%; 
+            animation: floatHeart 3s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+            z-index: 100; 
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(var(--y-move)) translateX(var(--x-move)) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
         }
     </style>
 </head>
@@ -99,34 +133,34 @@
 
     <div style="width: 100%; display: flex; justify-content: center; align-items: center; position: relative;">
 
-        <!-- SCREEN 2: Interactive Cake -->
         <div class="screen" id="part2">
             <h2>Make a Wish, Mayera! 🤫</h2>
             <div class="cake-box">
                 <span class="flame" id="c-flame">🔥</span>🎂
             </div>
-            <p>Close your eyes, think of a beautiful wish, and click below to open your personal birthday letter!</p>
+            <p>Close your eyes, think of a beautiful wish, and click below to reveal the grand card!</p>
             <button onclick="blowCandle()" style="background: linear-gradient(135deg, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);">Blow Candle 🌬️</button>
         </div>
 
-        <!-- SCREEN 3: Your Saved Personal Letter & Gift Box Box -->
         <div class="screen" id="part3">
-            <h1>Happy Birthday! 🎉</h1>
             
-            <!-- AAPKA APNA MESSAGE (Ekdum Surakshit) -->
             <div class="letter-card">
-                <h2>💖 Dear Bestie Mayera 💖</h2>
-                <p><b>Aaj ka din us dil ke naam,<br>jo har muskaan ke saath<br>duniya ko thoda aur khoobsurat bana deta hai.</b></p>
-                <p>🌹</p>
-                <p>Janamdin ki dher saari shubhkamnayein 🎂✨</p>
+                <div class="letter-title">Happy birthday</div>
+                
+                <div class="letter-text">
+                    Happy Birthday to the most special person in my life!<br>
+                    On your special day, I just want you to know how much you mean to me.<br>🎀<br>
+                    You bring light, laughter, and so much love wherever you go. 
+                    May your day be filled with all the happiness you deserve, and may this year bring you endless success, peace, and joy.<br><br>
+                    Always stay the amazing person you are — the world is better with you in it. 👀<br><br>
+                    Love you always. 💫🌷🤍
+                </div>
             </div>
             
-            <!-- TAP ME GIFT BOX FOR HEART ANIMATION -->
-            <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for heart magic! 👇</p>
-            <div class="interactive-gift" onclick="burstHearts()">🎁</div>
+            <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Tap the gift box for heart magic! 👇</p>
+            <div class="interactive-gift" onclick="burstHeartsMagic()">🎁</div>
         </div>
 
-        <!-- SCREEN 1: Welcome Greeting -->
         <div class="screen" id="part1">
             <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
             <h2>🎂 Happy 19th Birthday 🎂</h2>
@@ -137,34 +171,54 @@
     </div>
 
     <script>
+        // Generating background stars
+        for(let i=0; i<25; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = Math.random() * 4 + 2 + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(star);
+        }
+
         function blowCandle() {
             document.getElementById('c-flame').style.display = 'none';
             setTimeout(() => {
                 document.getElementById('part2').style.display = 'none';
                 document.getElementById('part3').style.display = 'block';
-                document.body.style.background = "linear-gradient(135deg, #1a0b2e, #0b0416)";
+                document.body.style.background = "linear-gradient(135deg, #16002c, #070014)";
             }, 600);
         }
 
-        // Tap Gift to burst hearts
-        function burstHearts() {
-            for(let i=0; i<15; i++) {
-                setTimeout(createSingleHeart, i * 60);
+        // Tap Gift Function to burst Gorgeous Floating Hearts
+        function burstHeartsMagic() {
+            for(let i=0; i<30; i++) {
+                setTimeout(createHeartBurst, i * 30);
             }
         }
 
-        function createSingleHeart() {
+        function createHeartBurst() {
             const h = document.createElement('div');
-            h.className = 'float-heart';
-            const heartOptions = ['❤️','💖','💝','💘','💕','✨'];
+            h.className = 'magic-heart';
+            const heartOptions = ['❤️','💖','💝','💘','💕','✨','🌸'];
             h.innerHTML = heartOptions[Math.floor(Math.random() * heartOptions.length)];
             
-            h.style.left = (15 + Math.random() * 70) + 'vw'; 
-            h.style.fontSize = (Math.random() * 25 + 20) + 'px';
-            h.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+            // Random Direction Explosion Mechanics
+            const xMove = (Math.random() * 300 - 150) + 'px';
+            const yMove = (-Math.random() * 400 - 150) + 'px';
+            const rot = (Math.random() * 360) + 'deg';
+            const scale = (Math.random() * 0.8 + 0.8);
+            
+            h.style.left = '50%';
+            h.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            h.style.setProperty('--x-move', xMove);
+            h.style.setProperty('--y-move', yMove);
+            h.style.setProperty('--scale', scale);
+            h.style.setProperty('--rot', rot);
             
             document.body.appendChild(h);
-            setTimeout(() => { h.remove(); }, 3500);
+            setTimeout(() => { h.remove(); }, 3000);
         }
     </script>
 </body>
