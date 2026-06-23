@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To My Dear Bestie Mayera ✨</title>
-    <link href="https://fonts.googleapis.com/css2=family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <title>Mayera's Birthday Quest! 🎮✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -13,156 +13,126 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
+            overflow: hidden;
             font-family: 'Poppins', sans-serif;
             color: #fff;
-            padding: 20px 0;
             position: relative;
-            transition: background 0.5s ease;
+            user-select: none;
         }
-        
-        /* Glowing Stars Background */
-        .star {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fff, 0 0 20px #fad961;
-            animation: blink 2s infinite alternate;
-            pointer-events: none;
-        }
-        @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
 
-        /* Smooth Screen Overlap Fix */
         .screen {
             display: none;
             width: 90%;
             max-width: 400px;
             text-align: center;
-            padding: 25px 20px;
+            padding: 30px 20px;
             border-radius: 24px;
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-            animation: fadeInSmooth 0.4s ease-in-out forwards;
+            z-index: 10;
+            animation: popIn 0.4s ease forwards;
         }
-        
-        /* Dynamic Class controlled by JS */
-        .screen.active {
-            display: block !important;
-        }
+        .screen.active { display: block !important; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        @keyframes fadeInSmooth {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 38px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-        }
-        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 38px; margin-bottom: 10px; }
+        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; color: #fff; }
         p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
         
         .btn-link {
-            display: block;
-            width: 100%;
-            padding: 15px;
+            display: block; width: 100%; padding: 15px;
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border: none;
-            border-radius: 50px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5);
-            transition: 0.2s;
-            text-align: center;
+            border: none; border-radius: 50px; color: white;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5); text-align: center;
         }
 
-        .cake-box { font-size: 80px; margin: 25px 0; position: relative; display: inline-block; }
+        /* Balloon Game Styling */
+        .balloon-area { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; }
+        .balloon {
+            position: absolute; width: 50px; height: 65px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            cursor: pointer; pointer-events: auto; animation: floatUp Game 4s linear forwards;
+        }
+        .balloon::after { content: "🎈"; font-size: 50px; position: absolute; top: -10px; left: 0; }
+        @keyframes floatUpGame { from { bottom: -100px; } to { bottom: 105vh; } }
+
+        /* Magic Wand Section */
+        .wand { font-size: 60px; cursor: pointer; display: inline-block; animation: shake 0.5s infinite alternate; }
+        @keyframes shake { from { transform: rotate(0deg); } to { transform: rotate(20deg); } }
+
+        /* Cake Box */
+        .cake-box { font-size: 80px; margin: 20px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
-        
-        /* Aesthetic Card Styling */
+
+        /* BLACK SCREEN LETTER CARD */
         .letter-card {
-            background: #fbf9f6;
-            color: #333;
+            background: #ffffff;
+            color: #222;
             padding: 30px 20px;
             border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
             text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid #eee;
+            margin-bottom: 25px;
         }
-        .letter-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 45px;
-            color: #111;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        .letter-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 15px;
-            color: #222;
-            line-height: 1.8;
-            text-align: center;
-            font-style: italic;
-        }
+        .letter-title { font-family: 'Great Vibes', cursive; font-size: 45px; margin-bottom: 15px; }
+        .letter-text { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.8; font-style: italic; }
 
-        /* Bouncing Gift Box */
+        /* Black Screen Gift Box */
         .interactive-gift {
-            font-size: 85px;
-            cursor: pointer;
-            display: inline-block;
-            margin: 10px 0;
-            animation: bounce 0.8s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-            transition: transform 0.1s;
+            font-size: 85px; cursor: pointer; display: inline-block;
+            animation: bounce 0.8s infinite alternate ease-in-out;
+            filter: drop-shadow(0 5px 15px rgba(255,255,255,0.2));
         }
-        .interactive-gift:active { transform: scale(0.85); }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
 
-        /* Heart Magic Burst */
-        .magic-heart { 
-            position: absolute; 
-            pointer-events: none; 
-            bottom: 20%; 
-            animation: floatHeart 3s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
-            z-index: 100; 
+        /* BLACK SCREEN HEART RAIN */
+        .black-heart { 
+            position: absolute; pointer-events: none; bottom: 15%; left: 50%;
+            animation: burstOut 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; z-index: 999; 
         }
-        @keyframes floatHeart {
-            0% { transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(var(--y-move)) translateX(var(--x-move)) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
+        @keyframes burstOut {
+            0% { transform: translate(0, 0) scale(0.3); opacity: 1; filter: drop-shadow(0 0 5px red); }
+            100% { transform: translate(var(--mx), var(--my)) scale(var(--ms)) rotate(var(--mr)); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SCREEN 1: Welcome Greeting -->
-    <div class="screen active" id="part1">
+    <div class="balloon-area" id="balloonContainer"></div>
+
+    <div class="screen active" id="scr1">
         <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
-        <p>Some people make the world brighter just by being in it...<br><br>Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
-        <button class="btn-link" onclick="showScreen('part1', 'part2')">✉️ Open Your Surprise</button>
+        <p>Some people make the world brighter just by being in it... Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
+        <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
-    <!-- SCREEN 2: Interactive Cake -->
-    <div class="screen" id="part2">
-        <h2>Make a Wish, Mayera! 🤫</h2>
-        <div class="cake-box">
-            <span class="flame" id="c-flame">🔥</span>🎂
-        </div>
-        <p>Close your eyes, think of a beautiful wish, and click below to reveal the grand card!</p>
-        <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);">Blow Candle 🌬️</button>
+    <div class="screen" id="scr2">
+        <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
+        <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
+        <p>Screen par aane waale balloons ko touch karke fodo!</p>
+        <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
-    <!-- SCREEN 3: Final Aesthetic Letter Card -->
-    <div class="screen" id="part3">
+    <div class="screen" id="scr3">
+        <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
+        <h2>Cast the Magic Spell! 🪄</h2>
+        <p>Cake lane ke liye neeche diye gaye magic wand par 3 baar tap karo!</p>
+        <div class="wand" onclick="tapWand()">🪄</div>
+        <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
+    </div>
+
+    <div class="screen" id="scr4">
+        <h2>Final Step! Make a Wish, Mayera 🤫</h2>
+        <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
+        <p>Close your eyes, think of a beautiful wish, and blow the candle!</p>
+        <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
+    </div>
+
+    <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05);">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
             <div class="letter-text">
@@ -174,62 +144,96 @@
                 Love you always. 💫🌷🤍
             </div>
         </div>
-        <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for heart magic! 👇</p>
-        <div class="interactive-gift" onclick="burstHeartsMagic()">🎁</div>
+        <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for Black Screen Heart Magic! 👇</p>
+        <div class="interactive-gift" onclick="burstBlackHearts()">🎁</div>
     </div>
 
     <script>
-        // Background Stars
-        for(let i=0; i<25; i++) {
-            let star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = star.style.height = Math.random() * 4 + 2 + 'px';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.animationDelay = Math.random() * 2 + 's';
-            document.body.appendChild(star);
+        let poppedCount = 0;
+        let balloonInterval;
+        let wandClicks = 0;
+
+        function nextScreen(hide, show) {
+            document.getElementById(hide).classList.remove('active');
+            document.getElementById(show).classList.add('active');
         }
 
-        // Strict Screen Controller (No more side-by-side glitches)
-        function showScreen(hideId, showId) {
-            document.getElementById(hideId).classList.remove('active');
-            document.getElementById(showId).classList.add('active');
+        // Mission 1 Start: Spawning Balloons
+        function startMission1() {
+            nextScreen('scr1', 'scr2');
+            balloonInterval = setInterval(spawnGameBalloon, 800);
         }
 
-        function blowCandle() {
-            document.getElementById('c-flame').style.display = 'none';
-            setTimeout(() => {
-                showScreen('part2', 'part3');
-                document.body.style.background = "linear-gradient(135deg, #16002c, #070014)";
-            }, 600);
+        function spawnGameBalloon() {
+            if (poppedCount >= 5) {
+                clearInterval(balloonInterval);
+                document.getElementById('balloonContainer').innerHTML = '';
+                nextScreen('scr2', 'scr3');
+                return;
+            }
+            const b = document.createElement('div');
+            b.className = 'balloon';
+            b.style.left = (10 + Math.random() * 75) + 'vw';
+            b.onclick = function() {
+                poppedCount++;
+                document.getElementById('scoreBox').innerText = `Balloons Popped: ${poppedCount} / 5`;
+                b.remove();
+                if(poppedCount >= 5) {
+                    clearInterval(balloonInterval);
+                    setTimeout(() => { nextScreen('scr2', 'scr3'); }, 500);
+                }
+            };
+            document.getElementById('balloonContainer').appendChild(b);
+            setTimeout(() => { b.remove(); }, 4000);
         }
 
-        function burstHeartsMagic() {
-            for(let i=0; i<30; i++) {
-                setTimeout(createHeartBurst, i * 30);
+        // Mission 2: Wand Tapping
+        function tapWand() {
+            wandClicks++;
+            let pct = Math.min(wandClicks * 34, 100);
+            document.getElementById('wandStatus').innerText = `✨ Magic energy: ${pct}%`;
+            if (wandClicks >= 3) {
+                setTimeout(() => { nextScreen('scr3', 'scr4'); }, 600);
             }
         }
 
-        function createHeartBurst() {
+        // Blow Candle Transition to Pure Black Screen
+        function blowCandle() {
+            document.getElementById('c-flame').style.display = 'none';
+            setTimeout(() => {
+                nextScreen('scr4', 'scr5');
+                // Absolute Black Screen Mode Triggered
+                document.body.style.background = "#000000";
+            }, 600);
+        }
+
+        // Heart Burst Mechanics exclusively on Black Background
+        function burstBlackHearts() {
+            for(let i=0; i<35; i++) {
+                setTimeout(createExplosionHeart, i * 25);
+            }
+        }
+
+        function createExplosionHeart() {
             const h = document.createElement('div');
-            h.className = 'magic-heart';
-            const heartOptions = ['❤️','💖','💝','💘','💕','✨','🌸'];
-            h.innerHTML = heartOptions[Math.floor(Math.random() * heartOptions.length)];
+            h.className = 'black-heart';
+            const hearts = ['❤️','💖','💝','💘','💕','✨','🔥'];
+            h.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
             
-            const xMove = (Math.random() * 300 - 150) + 'px';
-            const yMove = (-Math.random() * 400 - 150) + 'px';
-            const rot = (Math.random() * 360) + 'deg';
-            const scale = (Math.random() * 0.8 + 0.8);
+            // Extreme Direction Vectors for beautiful explosion spread
+            const mx = (Math.random() * 340 - 170) + 'px';
+            const my = (-Math.random() * 450 - 100) + 'px';
+            const mr = (Math.random() * 360) + 'deg';
+            const ms = (Math.random() * 0.9 + 0.8);
             
-            h.style.left = '50%';
-            h.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            h.style.setProperty('--x-move', xMove);
-            h.style.setProperty('--y-move', yMove);
-            h.style.setProperty('--scale', scale);
-            h.style.setProperty('--rot', rot);
+            h.style.fontSize = (Math.random() * 22 + 22) + 'px';
+            h.style.setProperty('--mx', mx);
+            h.style.setProperty('--my', my);
+            h.style.setProperty('--ms', ms);
+            h.style.setProperty('--mr', mr);
             
             document.body.appendChild(h);
-            setTimeout(() => { h.remove(); }, 3000);
+            setTimeout(() => { h.remove(); }, 2500);
         }
     </script>
 </body>
