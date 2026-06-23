@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To My Dear Bestie Mayera ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2=family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -18,6 +18,7 @@
             color: #fff;
             padding: 20px 0;
             position: relative;
+            transition: background 0.5s ease;
         }
         
         /* Glowing Stars Background */
@@ -31,7 +32,9 @@
         }
         @keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
 
+        /* Smooth Screen Overlap Fix */
         .screen {
+            display: none;
             width: 90%;
             max-width: 400px;
             text-align: center;
@@ -42,7 +45,19 @@
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            animation: fadeInSmooth 0.4s ease-in-out forwards;
         }
+        
+        /* Dynamic Class controlled by JS */
+        .screen.active {
+            display: block !important;
+        }
+
+        @keyframes fadeInSmooth {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 38px;
@@ -66,16 +81,13 @@
             cursor: pointer;
             box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5);
             transition: 0.2s;
+            text-align: center;
         }
 
-        #part2, #part3 { display: none; }
-        #part2:target { display: block; }
-        #part2:target ~ #part1 { display: none; }
-        
         .cake-box { font-size: 80px; margin: 25px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
         
-        /* Screenshot Aesthetic Card Styling */
+        /* Aesthetic Card Styling */
         .letter-card {
             background: #fbf9f6;
             color: #333;
@@ -115,7 +127,7 @@
         .interactive-gift:active { transform: scale(0.85); }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
 
-        /* Heart Magic Burst Elements */
+        /* Heart Magic Burst */
         .magic-heart { 
             position: absolute; 
             pointer-events: none; 
@@ -131,47 +143,43 @@
 </head>
 <body>
 
-    <div style="width: 100%; display: flex; justify-content: center; align-items: center; position: relative;">
+    <!-- SCREEN 1: Welcome Greeting -->
+    <div class="screen active" id="part1">
+        <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
+        <h2>🎂 Happy 19th Birthday 🎂</h2>
+        <p>Some people make the world brighter just by being in it...<br><br>Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
+        <button class="btn-link" onclick="showScreen('part1', 'part2')">✉️ Open Your Surprise</button>
+    </div>
 
-        <div class="screen" id="part2">
-            <h2>Make a Wish, Mayera! 🤫</h2>
-            <div class="cake-box">
-                <span class="flame" id="c-flame">🔥</span>🎂
+    <!-- SCREEN 2: Interactive Cake -->
+    <div class="screen" id="part2">
+        <h2>Make a Wish, Mayera! 🤫</h2>
+        <div class="cake-box">
+            <span class="flame" id="c-flame">🔥</span>🎂
+        </div>
+        <p>Close your eyes, think of a beautiful wish, and click below to reveal the grand card!</p>
+        <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);">Blow Candle 🌬️</button>
+    </div>
+
+    <!-- SCREEN 3: Final Aesthetic Letter Card -->
+    <div class="screen" id="part3">
+        <div class="letter-card">
+            <div class="letter-title">Happy birthday</div>
+            <div class="letter-text">
+                Happy Birthday to the most special person in my life!<br>
+                On your special day, I just want you to know how much you mean to me.<br>🎀<br>
+                You bring light, laughter, and so much love wherever you go. 
+                May your day be filled with all the happiness you deserve, and may this year bring you endless success, peace, and joy.<br><br>
+                Always stay the amazing person you are — the world is better with you in it. 👀<br><br>
+                Love you always. 💫🌷🤍
             </div>
-            <p>Close your eyes, think of a beautiful wish, and click below to reveal the grand card!</p>
-            <button onclick="blowCandle()" style="background: linear-gradient(135deg, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);">Blow Candle 🌬️</button>
         </div>
-
-        <div class="screen" id="part3">
-            
-            <div class="letter-card">
-                <div class="letter-title">Happy birthday</div>
-                
-                <div class="letter-text">
-                    Happy Birthday to the most special person in my life!<br>
-                    On your special day, I just want you to know how much you mean to me.<br>🎀<br>
-                    You bring light, laughter, and so much love wherever you go. 
-                    May your day be filled with all the happiness you deserve, and may this year bring you endless success, peace, and joy.<br><br>
-                    Always stay the amazing person you are — the world is better with you in it. 👀<br><br>
-                    Love you always. 💫🌷🤍
-                </div>
-            </div>
-            
-            <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Tap the gift box for heart magic! 👇</p>
-            <div class="interactive-gift" onclick="burstHeartsMagic()">🎁</div>
-        </div>
-
-        <div class="screen" id="part1">
-            <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
-            <h2>🎂 Happy 19th Birthday 🎂</h2>
-            <p>Some people make the world brighter just by being in it...<br><br>Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
-            <a href="#part2" class="btn-link" onclick="document.getElementById('part1').style.style.display='none';">✉️ Open Your Surprise</a>
-        </div>
-
+        <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for heart magic! 👇</p>
+        <div class="interactive-gift" onclick="burstHeartsMagic()">🎁</div>
     </div>
 
     <script>
-        // Generating background stars
+        // Background Stars
         for(let i=0; i<25; i++) {
             let star = document.createElement('div');
             star.className = 'star';
@@ -182,16 +190,20 @@
             document.body.appendChild(star);
         }
 
+        // Strict Screen Controller (No more side-by-side glitches)
+        function showScreen(hideId, showId) {
+            document.getElementById(hideId).classList.remove('active');
+            document.getElementById(showId).classList.add('active');
+        }
+
         function blowCandle() {
             document.getElementById('c-flame').style.display = 'none';
             setTimeout(() => {
-                document.getElementById('part2').style.display = 'none';
-                document.getElementById('part3').style.display = 'block';
+                showScreen('part2', 'part3');
                 document.body.style.background = "linear-gradient(135deg, #16002c, #070014)";
             }, 600);
         }
 
-        // Tap Gift Function to burst Gorgeous Floating Hearts
         function burstHeartsMagic() {
             for(let i=0; i<30; i++) {
                 setTimeout(createHeartBurst, i * 30);
@@ -204,7 +216,6 @@
             const heartOptions = ['❤️','💖','💝','💘','💕','✨','🌸'];
             h.innerHTML = heartOptions[Math.floor(Math.random() * heartOptions.length)];
             
-            // Random Direction Explosion Mechanics
             const xMove = (Math.random() * 300 - 150) + 'px';
             const yMove = (-Math.random() * 400 - 150) + 'px';
             const rot = (Math.random() * 360) + 'deg';
