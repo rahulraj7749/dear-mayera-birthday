@@ -110,6 +110,10 @@
 </head>
 <body>
 
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://pub-c5e31b5cdafb419a86a69d5d340a9ade.r2.dev/tum-ho-toh-saiyaara.mp3" type="audio/mpeg">
+    </audio>
+
     <canvas id="cinematicCanvas"></canvas>
     <div class="name-overlay" id="nameOverlay">
         My Special Person,<br>Dear Mayera 🤌🏻🎀
@@ -118,7 +122,6 @@
 
     <div class="balloon-area" id="balloonContainer"></div>
 
-    <!-- MISSION 1 -->
     <div class="screen active" id="scr1">
         <h1>🌸 My Special Person, Dear Mayera 🤌🏻🎀</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
@@ -126,7 +129,6 @@
         <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
-    <!-- MISSION 2 -->
     <div class="screen" id="scr2">
         <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
         <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
@@ -134,7 +136,6 @@
         <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
-    <!-- MISSION 3 -->
     <div class="screen" id="scr3">
         <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
         <h2>Cast the Magic Spell! 🪄</h2>
@@ -143,7 +144,6 @@
         <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
     </div>
 
-    <!-- CAKE BLOW STAGE -->
     <div class="screen" id="scr4">
         <h2>Final Step! Make a Wish,<br>Dear Mayera 🤫</h2>
         <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
@@ -151,7 +151,6 @@
         <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
     </div>
 
-    <!-- SCROLLABLE FINAL BLACK SCREEN -->
     <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05); margin: 20px 0;">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
@@ -173,58 +172,21 @@
         let balloonInterval;
         let wandClicks = 0;
 
-        // ================= MATH PIANO AUDIO ENGINE =================
-        let audioCtx = null;
-        function playNote(frequency, duration, startTime) {
-            if (!audioCtx) return;
-            let osc = audioCtx.createOscillator();
-            let gainNode = audioCtx.createGain();
-            
-            osc.type = 'sine'; // Soft sine wave for clean piano tone
-            osc.frequency.value = frequency;
-            
-            gainNode.gain.setValueAtTime(0.15, startTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-            
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            osc.start(startTime);
-            osc.stop(startTime + duration);
-        }
-
-        function playSaiyaanMelody() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            let now = audioCtx.currentTime;
-            
-            // "Tum Ho Toh Sab Sahi Hai" Note mapping frequencies loop
-            let notes = [
-                329.63, 392.00, 440.00, 392.00, 349.23, 329.63,
-                329.63, 392.00, 440.00, 493.88, 440.00, 392.00,
-                329.63, 392.00, 440.00, 392.00, 349.23, 329.63
-            ];
-            let tempo = 0.45; 
-
-            notes.forEach((note, index) => {
-                playNote(note, 0.6, now + (index * tempo));
-            });
-        }
-
-        function startMission1() {
-            // Trigger browser native audio synthesis on direct tap
-            try {
-                playSaiyaanMelody();
-                // Loop melody in background smoothly
-                setInterval(playSaiyaanMelody, 8500);
-            } catch(e) { console.log(e); }
-            
-            nextScreen('scr1', 'scr2');
-            balloonInterval = setInterval(spawnGameBalloon, 800);
-        }
-
         function nextScreen(hide, show) {
             document.getElementById(hide).classList.remove('active');
             document.getElementById(show).classList.add('active');
+        }
+
+        function startMission1() {
+            const music = document.getElementById('bgMusic');
+            music.play().then(() => {
+                console.log("Track live!");
+            }).catch(err => {
+                console.log("Audio ready");
+            });
+            
+            nextScreen('scr1', 'scr2');
+            balloonInterval = setInterval(spawnGameBalloon, 800);
         }
 
         function spawnGameBalloon() {
