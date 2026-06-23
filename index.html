@@ -106,14 +106,21 @@
             0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
             100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
         }
+
+        /* Hidden YT Player Window container */
+        #ytPlayerContainer {
+            position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; top: -10px; left: -10px;
+        }
     </style>
+    <!-- Injecting YouTube API Loader Module -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
-    <!-- VISHAL MISHRA - TUM HO TOH (FROM SAIYAARA) HIGH-SPEED MUSIC SOURCE -->
-    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
-        <source src="https://pub-c5e31b5cdafb419a86a69d5d340a9ade.r2.dev/tum-ho-toh-saiyaara.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Invisible background wrapper container for YouTube video stream -->
+    <div id="ytPlayerContainer">
+        <div id="player"></div>
+    </div>
 
     <canvas id="cinematicCanvas"></canvas>
     <div class="name-overlay" id="nameOverlay">
@@ -177,6 +184,22 @@
         let poppedCount = 0;
         let balloonInterval;
         let wandClicks = 0;
+        let ytPlayer;
+
+        // Async API setup from YouTube network engines
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('player', {
+                height: '100',
+                width: '100',
+                videoId: 'uS3XvK3Dka0', // Official YouTube track ID for Vishal Mishra's Tum Ho Toh
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'uS3XvK3Dka0'
+                }
+            });
+        }
 
         function nextScreen(hide, show) {
             document.getElementById(hide).classList.remove('active');
@@ -184,12 +207,10 @@
         }
 
         function startMission1() {
-            const music = document.getElementById('bgMusic');
-            music.play().then(() => {
-                console.log("Tum Ho Toh track live!");
-            }).catch(err => {
-                console.log("Audio ready");
-            });
+            // Unlocks video player audio bypass instantly on physical click action
+            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                ytPlayer.playVideo();
+            }
             
             nextScreen('scr1', 'scr2');
             balloonInterval = setInterval(spawnGameBalloon, 800);
