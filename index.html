@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mayera's Birthday Quest! 🎮✨</title>
+    <title>Dear Mayera's Birthday Quest! 🎮✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +39,7 @@
         @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         h1 { font-family: 'Great Vibes', cursive; font-size: 38px; margin-bottom: 10px; }
-        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; color: #fff; }
+        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 600; }
         p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
         
         .btn-link {
@@ -50,16 +50,13 @@
             box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5); text-align: center;
         }
 
-        /* Balloon Game Styling */
+        /* Balloon Game */
         .balloon-area { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; }
-        .balloon {
-            position: absolute; width: 50px; height: 65px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            cursor: pointer; pointer-events: auto; animation: floatUp Game 4s linear forwards;
-        }
+        .balloon { position: absolute; width: 50px; height: 65px; cursor: pointer; pointer-events: auto; animation: floatUpGame 4s linear forwards; }
         .balloon::after { content: "🎈"; font-size: 50px; position: absolute; top: -10px; left: 0; }
         @keyframes floatUpGame { from { bottom: -100px; } to { bottom: 105vh; } }
 
-        /* Magic Wand Section */
+        /* Wand Section */
         .wand { font-size: 60px; cursor: pointer; display: inline-block; animation: shake 0.5s infinite alternate; }
         @keyframes shake { from { transform: rotate(0deg); } to { transform: rotate(20deg); } }
 
@@ -67,42 +64,60 @@
         .cake-box { font-size: 80px; margin: 20px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
 
-        /* BLACK SCREEN LETTER CARD */
+        /* Scrollable Letter Card */
         .letter-card {
-            background: #ffffff;
-            color: #222;
-            padding: 30px 20px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            margin-bottom: 25px;
+            background: #ffffff; color: #222; padding: 30px 20px; border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; margin-bottom: 25px; width: 100%;
         }
-        .letter-title { font-family: 'Great Vibes', cursive; font-size: 45px; margin-bottom: 15px; }
-        .letter-text { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.8; font-style: italic; }
+        .letter-title { font-family: 'Great Vibes', cursive; font-size: 45px; margin-bottom: 15px; color: #111; }
+        .letter-text { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.8; font-style: italic; color: #222; }
 
-        /* Black Screen Gift Box */
         .interactive-gift {
-            font-size: 85px; cursor: pointer; display: inline-block;
+            font-size: 85px; cursor: pointer; display: inline-block; margin-bottom: 20px;
             animation: bounce 0.8s infinite alternate ease-in-out;
             filter: drop-shadow(0 5px 15px rgba(255,255,255,0.2));
         }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
 
-        /* BLACK SCREEN HEART RAIN */
-        .black-heart { 
-            position: absolute; pointer-events: none; bottom: 15%; left: 50%;
-            animation: burstOut 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; z-index: 999; 
+        /* Cinematic Setup */
+        #cinematicCanvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 99999; display: none;
         }
-        @keyframes burstOut {
-            0% { transform: translate(0, 0) scale(0.3); opacity: 1; filter: drop-shadow(0 0 5px red); }
-            100% { transform: translate(var(--mx), var(--my)) scale(var(--ms)) rotate(var(--mr)); opacity: 0; }
+
+        .name-overlay {
+            position: fixed; top: 48%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'Great Vibes', cursive; font-size: 42px; font-weight: bold;
+            color: #fff; text-shadow: 0 0 10px #ff416c, 0 0 30px #ff4b2b, 0 0 5px #fff;
+            z-index: 100000; display: none; opacity: 0;
+            animation: textGlowFade 2.5s ease forwards 1.2s;
+            text-align: center; pointer-events: none; width: 100%;
+        }
+
+        .sub-overlay {
+            font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 300;
+            letter-spacing: 3px; color: rgba(255,255,255,0.8); margin-top: 5px;
+            text-transform: uppercase; text-shadow: none;
+        }
+
+        @keyframes textGlowFade {
+            0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
         }
     </style>
 </head>
 <body>
 
+    <!-- SCREENSHOT CINEMATIC OVERLAY WITH "DEAR MAYERA" FIXED -->
+    <canvas id="cinematicCanvas"></canvas>
+    <div class="name-overlay" id="nameOverlay">
+        Dear Mayera
+        <div class="sub-overlay">This is for you ❤️</div>
+    </div>
+
     <div class="balloon-area" id="balloonContainer"></div>
 
+    <!-- MISSION 1 -->
     <div class="screen active" id="scr1">
         <h1>🌸 To My Dear Bestie, Mayera 💖</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
@@ -110,6 +125,7 @@
         <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
+    <!-- MISSION 2 -->
     <div class="screen" id="scr2">
         <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
         <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
@@ -117,6 +133,7 @@
         <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
+    <!-- MISSION 3 -->
     <div class="screen" id="scr3">
         <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
         <h2>Cast the Magic Spell! 🪄</h2>
@@ -125,6 +142,7 @@
         <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
     </div>
 
+    <!-- CAKE BLOW STAGE -->
     <div class="screen" id="scr4">
         <h2>Final Step! Make a Wish, Mayera 🤫</h2>
         <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
@@ -132,7 +150,8 @@
         <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
     </div>
 
-    <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05);">
+    <!-- SCROLLABLE FINAL BLACK SCREEN -->
+    <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05); margin: 20px 0;">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
             <div class="letter-text">
@@ -144,8 +163,8 @@
                 Love you always. 💫🌷🤍
             </div>
         </div>
-        <p style="margin-bottom: 5px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for Black Screen Heart Magic! 👇</p>
-        <div class="interactive-gift" onclick="burstBlackHearts()">🎁</div>
+        <p style="margin-bottom: 15px; font-weight: bold; color: #fad961; font-size: 14px;">Tap the gift box for real premium magic! 👇</p>
+        <div class="interactive-gift" onclick="triggerCinematicHeart()">🎁</div>
     </div>
 
     <script>
@@ -158,7 +177,6 @@
             document.getElementById(show).classList.add('active');
         }
 
-        // Mission 1 Start: Spawning Balloons
         function startMission1() {
             nextScreen('scr1', 'scr2');
             balloonInterval = setInterval(spawnGameBalloon, 800);
@@ -187,7 +205,6 @@
             setTimeout(() => { b.remove(); }, 4000);
         }
 
-        // Mission 2: Wand Tapping
         function tapWand() {
             wandClicks++;
             let pct = Math.min(wandClicks * 34, 100);
@@ -197,43 +214,145 @@
             }
         }
 
-        // Blow Candle Transition to Pure Black Screen
+        document.body.style.display = "flex";
+
         function blowCandle() {
             document.getElementById('c-flame').style.display = 'none';
             setTimeout(() => {
                 nextScreen('scr4', 'scr5');
-                // Absolute Black Screen Mode Triggered
                 document.body.style.background = "#000000";
+                document.body.style.overflowY = "auto"; 
+                document.body.style.display = "block";
+                document.getElementById('scr5').style.margin = "40px auto";
             }, 600);
         }
 
-        // Heart Burst Mechanics exclusively on Black Background
-        function burstBlackHearts() {
-            for(let i=0; i<35; i++) {
-                setTimeout(createExplosionHeart, i * 25);
-            }
-        }
+        // ================= CINEMATIC HEART TRAIL ENGINE =================
+        function triggerCinematicHeart() {
+            document.getElementById('scr5').style.display = 'none';
+            document.body.style.overflow = "hidden";
+            
+            const canvas = document.getElementById('cinematicCanvas');
+            const overlay = document.getElementById('nameOverlay');
+            canvas.style.display = 'block';
+            overlay.style.display = 'block';
 
-        function createExplosionHeart() {
-            const h = document.createElement('div');
-            h.className = 'black-heart';
-            const hearts = ['❤️','💖','💝','💘','💕','✨','🔥'];
-            h.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-            
-            // Extreme Direction Vectors for beautiful explosion spread
-            const mx = (Math.random() * 340 - 170) + 'px';
-            const my = (-Math.random() * 450 - 100) + 'px';
-            const mr = (Math.random() * 360) + 'deg';
-            const ms = (Math.random() * 0.9 + 0.8);
-            
-            h.style.fontSize = (Math.random() * 22 + 22) + 'px';
-            h.style.setProperty('--mx', mx);
-            h.style.setProperty('--my', my);
-            h.style.setProperty('--ms', ms);
-            h.style.setProperty('--mr', mr);
-            
-            document.body.appendChild(h);
-            setTimeout(() => { h.remove(); }, 2500);
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            let heartPoints = [];
+            let targetIndex = 0;
+            let centerWidth = canvas.width / 2;
+            let centerHeight = canvas.height / 2 - 20;
+
+            for (let t = 0; t < Math.PI * 2; t += 0.03) {
+                let r = 13; 
+                let x = r * 16 * Math.pow(Math.sin(t), 3);
+                let y = -r * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                heartPoints.push({x: centerWidth + x, y: centerHeight + y});
+            }
+
+            class AmbientSparkle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedY = Math.random() * 0.5 + 0.2;
+                    this.alpha = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.y -= this.speedY;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(255, 100, 150, ${this.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            class OutlineNode {
+                constructor(x, y) {
+                    this.x = x + (Math.random() * 10 - 5);
+                    this.y = y + (Math.random() * 10 - 5);
+                    this.size = Math.random() * 3 + 1.5;
+                    this.color = `hsl(${340 + Math.random() * 20}, 100%, ${60 + Math.random() * 20}%)`;
+                    this.alpha = 1;
+                    this.decay = Math.random() * 0.015 + 0.005;
+                }
+                update() { this.alpha -= this.decay; }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = this.color;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < 40; i++) { particles.push(new AmbientSparkle()); }
+
+            let mainHeartScale = 1;
+            let heartGrow = true;
+            let trailPoints = [];
+
+            function animateLoop() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.12)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => { p.update(); p.draw(); });
+
+                if (targetIndex < heartPoints.length) {
+                    for(let k = 0; k < 3; k++) { 
+                        if(targetIndex < heartPoints.length) {
+                            let pt = heartPoints[targetIndex];
+                            trailPoints.push(new OutlineNode(pt.x, pt.y));
+                            targetIndex++;
+                        }
+                    }
+                }
+
+                trailPoints.forEach((tp, index) => {
+                    tp.update(); tp.draw();
+                    if(tp.alpha <= 0) trailPoints.splice(index, 1);
+                });
+
+                if (targetIndex >= heartPoints.length / 2) {
+                    if (heartGrow) {
+                        mainHeartScale += 0.006;
+                        if (mainHeartScale >= 1.15) heartGrow = false;
+                    } else {
+                        mainHeartScale -= 0.006;
+                        if (mainHeartScale <= 0.95) heartGrow = true;
+                    }
+
+                    ctx.save();
+                    ctx.translate(centerWidth, centerHeight + 15);
+                    ctx.scale(mainHeartScale, mainHeartScale);
+                    ctx.shadowBlur = 30;
+                    ctx.shadowColor = '#ff2a6d';
+                    ctx.fillStyle = '#ff416c';
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.bezierCurveTo(-25, -35, -55, -15, -55, 15);
+                    ctx.bezierCurveTo(-55, 40, -25, 60, 0, 85);
+                    ctx.bezierCurveTo(25, 60, 55, 40, 55, 15);
+                    ctx.bezierCurveTo(55, -15, 25, -35, 0, -10);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                requestAnimationFrame(animateLoop);
+            }
+            animateLoop();
         }
     </script>
 </body>
