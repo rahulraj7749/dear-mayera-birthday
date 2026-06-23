@@ -20,6 +20,16 @@
             user-select: none;
         }
 
+        /* Fixed Music Controller Top Right */
+        .music-ctrl {
+            position: fixed; top: 15px; right: 15px; z-index: 100001;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4); padding: 10px 15px;
+            border-radius: 30px; font-size: 13px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
         .screen {
             display: none;
             width: 90%;
@@ -110,7 +120,11 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto">
+    <!-- Upper Right Manual Control Bypass Layer -->
+    <div class="music-ctrl" onclick="toggleMusic()" id="musicBtn">🎵 Play Music</div>
+
+    <!-- HIGH-STABILITY MULTI-LINK GLOBAL ENGINE FOR VISHAL MISHRA'S SONG -->
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
         <source src="https://pub-c5e31b5cdafb419a86a69d5d340a9ade.r2.dev/tum-ho-toh-saiyaara.mp3" type="audio/mpeg">
     </audio>
 
@@ -122,6 +136,7 @@
 
     <div class="balloon-area" id="balloonContainer"></div>
 
+    <!-- MISSION 1 -->
     <div class="screen active" id="scr1">
         <h1>🌸 My Special Person, Dear Mayera 🤌🏻🎀</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
@@ -129,6 +144,7 @@
         <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
+    <!-- MISSION 2 -->
     <div class="screen" id="scr2">
         <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
         <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
@@ -136,6 +152,7 @@
         <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
+    <!-- MISSION 3 -->
     <div class="screen" id="scr3">
         <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
         <h2>Cast the Magic Spell! 🪄</h2>
@@ -144,6 +161,7 @@
         <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
     </div>
 
+    <!-- CAKE BLOW STAGE -->
     <div class="screen" id="scr4">
         <h2>Final Step! Make a Wish,<br>Dear Mayera 🤫</h2>
         <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
@@ -151,6 +169,7 @@
         <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
     </div>
 
+    <!-- SCROLLABLE FINAL BLACK SCREEN -->
     <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05); margin: 20px 0;">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
@@ -172,21 +191,34 @@
         let balloonInterval;
         let wandClicks = 0;
 
-        function nextScreen(hide, show) {
-            document.getElementById(hide).classList.remove('active');
-            document.getElementById(show).classList.add('active');
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if (music.paused) {
+                music.play();
+                btn.innerText = "⏸️ Pause Music";
+            } else {
+                music.pause();
+                btn.innerText = "🎵 Play Music";
+            }
         }
 
         function startMission1() {
             const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
             music.play().then(() => {
-                console.log("Track live!");
+                btn.innerText = "⏸️ Pause Music";
             }).catch(err => {
-                console.log("Audio ready");
+                console.log("Awaiting custom tap integration");
             });
             
             nextScreen('scr1', 'scr2');
             balloonInterval = setInterval(spawnGameBalloon, 800);
+        }
+
+        function nextScreen(hide, show) {
+            document.getElementById(hide).classList.remove('active');
+            document.getElementById(show).classList.add('active');
         }
 
         function spawnGameBalloon() {
