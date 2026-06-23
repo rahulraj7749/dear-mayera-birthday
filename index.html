@@ -106,21 +106,9 @@
             0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
             100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
         }
-
-        /* Hidden YT Player Window container */
-        #ytPlayerContainer {
-            position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; top: -10px; left: -10px;
-        }
     </style>
-    <!-- Injecting YouTube API Loader Module -->
-    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-
-    <!-- Invisible background wrapper container for YouTube video stream -->
-    <div id="ytPlayerContainer">
-        <div id="player"></div>
-    </div>
 
     <canvas id="cinematicCanvas"></canvas>
     <div class="name-overlay" id="nameOverlay">
@@ -184,36 +172,59 @@
         let poppedCount = 0;
         let balloonInterval;
         let wandClicks = 0;
-        let ytPlayer;
 
-        // Async API setup from YouTube network engines
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('player', {
-                height: '100',
-                width: '100',
-                videoId: 'uS3XvK3Dka0', // Official YouTube track ID for Vishal Mishra's Tum Ho Toh
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'uS3XvK3Dka0'
-                }
+        // ================= MATH PIANO AUDIO ENGINE =================
+        let audioCtx = null;
+        function playNote(frequency, duration, startTime) {
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gainNode = audioCtx.createGain();
+            
+            osc.type = 'sine'; // Soft sine wave for clean piano tone
+            osc.frequency.value = frequency;
+            
+            gainNode.gain.setValueAtTime(0.15, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        }
+
+        function playSaiyaanMelody() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let now = audioCtx.currentTime;
+            
+            // "Tum Ho Toh Sab Sahi Hai" Note mapping frequencies loop
+            let notes = [
+                329.63, 392.00, 440.00, 392.00, 349.23, 329.63,
+                329.63, 392.00, 440.00, 493.88, 440.00, 392.00,
+                329.63, 392.00, 440.00, 392.00, 349.23, 329.63
+            ];
+            let tempo = 0.45; 
+
+            notes.forEach((note, index) => {
+                playNote(note, 0.6, now + (index * tempo));
             });
+        }
+
+        function startMission1() {
+            // Trigger browser native audio synthesis on direct tap
+            try {
+                playSaiyaanMelody();
+                // Loop melody in background smoothly
+                setInterval(playSaiyaanMelody, 8500);
+            } catch(e) { console.log(e); }
+            
+            nextScreen('scr1', 'scr2');
+            balloonInterval = setInterval(spawnGameBalloon, 800);
         }
 
         function nextScreen(hide, show) {
             document.getElementById(hide).classList.remove('active');
             document.getElementById(show).classList.add('active');
-        }
-
-        function startMission1() {
-            // Unlocks video player audio bypass instantly on physical click action
-            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-                ytPlayer.playVideo();
-            }
-            
-            nextScreen('scr1', 'scr2');
-            balloonInterval = setInterval(spawnGameBalloon, 800);
         }
 
         function spawnGameBalloon() {
