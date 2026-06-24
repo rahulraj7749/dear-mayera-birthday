@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Special Person, Dear Mayera ✨🎮</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght=1,500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -59,6 +59,16 @@
             box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5); text-align: center;
         }
 
+        /* Ambient Floating Hearts System */
+        .ambient-hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+        .bg-heart { position: absolute; color: rgba(255, 75, 110, 0.25); font-size: 20px; animation: floatUpHeart 6s linear forwards; }
+        @keyframes floatUpHeart {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
         /* Balloon Game */
         .balloon-area { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; }
         .balloon { position: absolute; width: 50px; height: 65px; cursor: pointer; pointer-events: auto; animation: floatUpGame 4s linear forwards; }
@@ -73,11 +83,15 @@
         .cake-box { font-size: 80px; margin: 20px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
 
-        /* Scrollable Letter Card */
+        /* Smooth Rolling Card Pop-In Animation */
         .letter-card {
             background: #ffffff; color: #222; padding: 30px 20px; border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; margin-bottom: 25px; width: 100%;
+            opacity: 0; transform: translateY(40px) scale(0.95);
+            animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.3s;
         }
+        @keyframes cardReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+        
         .letter-title { font-family: 'Great Vibes', cursive; font-size: 45px; margin-bottom: 15px; color: #111; }
         .letter-text { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.8; font-style: italic; color: #222; }
 
@@ -120,7 +134,9 @@
 <body>
 
     <div class="music-ctrl" onclick="toggleMusic()" id="musicBtn">🎵 Play Music</div>
+    <div class="ambient-hearts" id="heartsBgContainer"></div>
 
+    <!-- 100% SECURE LOCAL AUDIO SOURCE FROM YOUR REPOSITORY -->
     <audio id="bgMusic" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
@@ -133,6 +149,7 @@
 
     <div class="balloon-area" id="balloonContainer"></div>
 
+    <!-- MISSION 1 -->
     <div class="screen active" id="scr1">
         <h1>🌸 My Special Person, Dear Mayera 🤌🏻🎀</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
@@ -140,6 +157,7 @@
         <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
+    <!-- MISSION 2 -->
     <div class="screen" id="scr2">
         <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
         <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
@@ -147,6 +165,7 @@
         <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
+    <!-- MISSION 3 -->
     <div class="screen" id="scr3">
         <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
         <h2>Cast the Magic Spell! 🪄</h2>
@@ -155,6 +174,7 @@
         <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
     </div>
 
+    <!-- CAKE BLOW STAGE -->
     <div class="screen" id="scr4">
         <h2>Final Step! Make a Wish,<br>Dear Mayera 🤫</h2>
         <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
@@ -162,6 +182,7 @@
         <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
     </div>
 
+    <!-- SCROLLABLE FINAL BLACK SCREEN -->
     <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05); margin: 20px 0;">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
@@ -183,6 +204,20 @@
         let balloonInterval;
         let wandClicks = 0;
 
+        // Background Hearts Generator
+        setInterval(() => {
+            const container = document.getElementById('heartsBgContainer');
+            if(!container) return;
+            const h = document.createElement('div');
+            h.className = 'bg-heart';
+            h.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (12 + Math.random() * 18) + 'px';
+            h.style.animationDuration = (4 + Math.random() * 4) + 's';
+            container.appendChild(h);
+            setTimeout(() => { h.remove(); }, 8000);
+        }, 600);
+
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
             const btn = document.getElementById('musicBtn');
@@ -201,7 +236,7 @@
             music.play().then(() => {
                 btn.innerText = "⏸️ Pause Music";
             }).catch(err => {
-                console.log("Audio waiting for player tap");
+                console.log("Audio waiting for player gesture");
             });
             
             nextScreen('scr1', 'scr2');
@@ -258,8 +293,10 @@
             }, 600);
         }
 
+        // ================= CINEMATIC HEART TRAIL ENGINE =================
         function triggerCinematicHeart() {
             document.getElementById('scr5').style.display = 'none';
+            document.getElementById('heartsBgContainer').style.display = 'none';
             document.body.style.overflow = "hidden";
             
             const canvas = document.getElementById('cinematicCanvas');
