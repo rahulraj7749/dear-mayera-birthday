@@ -8,7 +8,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: linear-gradient(135deg, #f76b1c, #fad961);
+            background: #0c0c1e;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -18,15 +18,23 @@
             color: #fff;
             position: relative;
             user-select: none;
+            transition: background 0.5s ease;
         }
 
+        /* Interactive Music Engine Control */
         .music-ctrl {
             position: fixed; top: 15px; right: 15px; z-index: 100001;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.4); padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3); padding: 10px 15px;
             border-radius: 30px; font-size: 13px; font-weight: 600;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Live Core Background Canvas Engine */
+        #bgCanvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; pointer-events: none;
         }
 
         .screen {
@@ -34,56 +42,48 @@
             width: 90%;
             max-width: 400px;
             text-align: center;
-            padding: 30px 20px;
+            padding: 35px 25px;
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(15, 15, 35, 0.65);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             z-index: 10;
-            animation: popIn 0.4s ease forwards;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .screen.active { display: block !important; }
-        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
 
-        h1 { font-family: 'Great Vibes', cursive; font-size: 34px; margin-bottom: 10px; line-height: 1.3; }
-        h2 { font-size: 20px; margin-bottom: 15px; font-weight: 600; }
-        p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 38px; margin-bottom: 12px; line-height: 1.3; color: #fad961; text-shadow: 0 0 10px rgba(254,217,97,0.5); }
+        h2 { font-size: 20px; margin-bottom: 15px; font-weight: 600; color: #fff; }
+        p { font-size: 14px; line-height: 1.6; margin-bottom: 25px; color: rgba(255,255,255,0.85); }
         
         .btn-link {
-            display: block; width: 100%; padding: 15px;
+            display: block; width: 100%; padding: 16px;
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             border: none; border-radius: 50px; color: white;
             font-size: 16px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.5); text-align: center;
+            box-shadow: 0 6px 25px rgba(255, 65, 108, 0.65); text-align: center;
+            transition: transform 0.2s;
         }
+        .btn-link:active { transform: scale(0.98); }
 
-        /* Ambient Floating Hearts System */
-        .ambient-hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 2; overflow: hidden; }
-        .bg-heart { position: absolute; color: rgba(255, 75, 110, 0.25); font-size: 20px; animation: floatUpHeart 6s linear forwards; }
-        @keyframes floatUpHeart {
-            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Balloon Game */
+        /* Balloon Game Structure */
         .balloon-area { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; }
         .balloon { position: absolute; width: 50px; height: 65px; cursor: pointer; pointer-events: auto; animation: floatUpGame 4s linear forwards; }
         .balloon::after { content: "🎈"; font-size: 50px; position: absolute; top: -10px; left: 0; }
         @keyframes floatUpGame { from { bottom: -100px; } to { bottom: 105vh; } }
 
-        /* Wand Section */
+        /* Wand Interaction */
         .wand { font-size: 60px; cursor: pointer; display: inline-block; animation: shake 0.5s infinite alternate; }
         @keyframes shake { from { transform: rotate(0deg); } to { transform: rotate(20deg); } }
 
-        /* Cake Box */
+        /* Cake Blowing Stage */
         .cake-box { font-size: 80px; margin: 20px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
 
-        /* Smooth Rolling Card Pop-In Animation */
+        /* Card Mechanics */
         .letter-card {
             background: #ffffff; color: #222; padding: 30px 20px; border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; margin-bottom: 25px; width: 100%;
@@ -102,7 +102,7 @@
         }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
 
-        /* Cinematic Canvas */
+        /* Main Cinematic Overlay Matrix */
         #cinematicCanvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 99999; display: none;
@@ -115,8 +115,7 @@
             z-index: 100000; display: none; opacity: 0;
             animation: textGlowFade 2.5s ease forwards 1.2s;
             text-align: center; pointer-events: none; width: 100%;
-            padding: 0 10px;
-            line-height: 1.4;
+            padding: 0 10px; line-height: 1.4;
         }
 
         .sub-overlay {
@@ -134,9 +133,8 @@
 <body>
 
     <div class="music-ctrl" onclick="toggleMusic()" id="musicBtn">🎵 Play Music</div>
-    <div class="ambient-hearts" id="heartsBgContainer"></div>
+    <canvas id="bgCanvas"></canvas>
 
-    <!-- 100% SECURE LOCAL AUDIO SOURCE FROM YOUR REPOSITORY -->
     <audio id="bgMusic" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
@@ -149,23 +147,20 @@
 
     <div class="balloon-area" id="balloonContainer"></div>
 
-    <!-- MISSION 1 -->
     <div class="screen active" id="scr1">
-        <h1>🌸 My Special Person, Dear Mayera 🤌🏻🎀</h1>
+        <h1>🌸 Dear Mayera 🤌🏻🎀</h1>
         <h2>🎂 Happy 19th Birthday 🎂</h2>
         <p>Some people make the world brighter just by being in it... Today, we celebrate someone truly special — ❤️ My Dear Bestie, Mayera ❤️</p>
         <button class="btn-link" onclick="startMission1()">✉️ Open Your Surprise</button>
     </div>
 
-    <!-- MISSION 2 -->
     <div class="screen" id="scr2">
         <h2 style="color: #fad961;">🚨 MISSION 1 🚨</h2>
         <h2 style="font-size: 18px;">Pop 5 Balloons to Unlock! 🎈</h2>
         <p>Screen par aane waale balloons ko touch karke fodo!</p>
-        <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
+        <div style="font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 10px;" id="scoreBox">Balloons Popped: 0 / 5</div>
     </div>
 
-    <!-- MISSION 3 -->
     <div class="screen" id="scr3">
         <h2 style="color: #fad961;">🚨 MISSION 2 🚨</h2>
         <h2>Cast the Magic Spell! 🪄</h2>
@@ -174,7 +169,6 @@
         <div style="margin-top: 10px;" id="wandStatus">✨ Magic energy: 0%</div>
     </div>
 
-    <!-- CAKE BLOW STAGE -->
     <div class="screen" id="scr4">
         <h2>Final Step! Make a Wish,<br>Dear Mayera 🤫</h2>
         <div class="cake-box"><span class="flame" id="c-flame">🔥</span>🎂</div>
@@ -182,7 +176,6 @@
         <button onclick="blowCandle()" style="width:100%; padding:15px; border-radius:50px; border:none; color:white; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #11998e, #38ef7d);">Blow Candle 🌬️</button>
     </div>
 
-    <!-- SCROLLABLE FINAL BLACK SCREEN -->
     <div class="screen" id="scr5" style="background: rgba(0,0,0,0.9); border: 1px solid #333; box-shadow: 0 0 30px rgba(255,255,255,0.05); margin: 20px 0;">
         <div class="letter-card">
             <div class="letter-title">Happy birthday</div>
@@ -203,21 +196,116 @@
         let poppedCount = 0;
         let balloonInterval;
         let wandClicks = 0;
+        let globalMode = 'fireworks'; // 'fireworks' or 'hearts'
 
-        // Background Hearts Generator
+        // ================= UNIVERSAL BACKGROUND CANVAS MATRIX =================
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let fwParticles = [];
+        let ambientElements = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Firework Particle Blueprint
+        class FWParticle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y;
+                this.color = color;
+                this.radius = Math.random() * 2.5 + 1;
+                let angle = Math.random() * Math.PI * 2;
+                let speed = Math.random() * 5 + 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.015;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                this.vy += 0.04; // gravity simulation
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Ambient Element Blueprint (Hearts)
+        class AmbientHeart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 15 + 12;
+                this.speedY = Math.random() * 1.5 + 1;
+                this.vx = Math.sin(Math.random() * Math.PI) * 0.3;
+                this.alpha = Math.random() * 0.4 + 0.3;
+                this.char = Math.random() > 0.5 ? '❤️' : '💖';
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.vx;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText(this.char, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        // Automated System Launchers
         setInterval(() => {
-            const container = document.getElementById('heartsBgContainer');
-            if(!container) return;
-            const h = document.createElement('div');
-            h.className = 'bg-heart';
-            h.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (12 + Math.random() * 18) + 'px';
-            h.style.animationDuration = (4 + Math.random() * 4) + 's';
-            container.appendChild(h);
-            setTimeout(() => { h.remove(); }, 8000);
-        }, 600);
+            if(globalMode !== 'fireworks') return;
+            let startX = canvas.width / 4 + Math.random() * (canvas.width / 2);
+            let startY = canvas.height / 4 + Math.random() * (canvas.height / 3);
+            let colors = ['#ff416c', '#ff4b2b', '#fad961', '#11998e', '#38ef7d', '#b19ffb', '#00f2fe'];
+            let chosenColor = colors[Math.floor(Math.random() * colors.length)];
+            for(let i=0; i<60; i++) {
+                fwParticles.push(new FWParticle(startX, startY, chosenColor));
+            }
+        }, 1200);
 
+        setInterval(() => {
+            if(globalMode !== 'hearts') return;
+            ambientElements.push(new AmbientHeart());
+        }, 400);
+
+        function runGlobalEngine() {
+            if(globalMode === 'fireworks') {
+                ctx.fillStyle = 'rgba(12, 12, 30, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            fwParticles.forEach((p, idx) => {
+                p.update(); p.draw();
+                if(p.alpha <= 0) fwParticles.splice(idx, 1);
+            });
+
+            ambientElements.forEach((e, idx) => {
+                e.update(); e.draw();
+                if(e.y < -30) ambientElements.splice(idx, 1);
+            });
+
+            requestAnimationFrame(runGlobalEngine);
+        }
+        runGlobalEngine();
+
+        // ================= MUSIC AND NAVIGATION FUNCTIONS =================
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
             const btn = document.getElementById('musicBtn');
@@ -235,9 +323,10 @@
             const btn = document.getElementById('musicBtn');
             music.play().then(() => {
                 btn.innerText = "⏸️ Pause Music";
-            }).catch(err => {
-                console.log("Audio waiting for player gesture");
-            });
+            }).catch(err => console.log("Audio activation awaiting layer tap"));
+            
+            globalMode = 'hearts'; // Switch setup seamlessly to smooth floating hearts
+            document.body.style.background = "linear-gradient(135deg, #f76b1c, #fad961)";
             
             nextScreen('scr1', 'scr2');
             balloonInterval = setInterval(spawnGameBalloon, 800);
@@ -280,8 +369,6 @@
             }
         }
 
-        document.body.style.display = "flex";
-
         function blowCandle() {
             document.getElementById('c-flame').style.display = 'none';
             setTimeout(() => {
@@ -290,29 +377,30 @@
                 document.body.style.overflowY = "auto"; 
                 document.body.style.display = "block";
                 document.getElementById('scr5').style.margin = "40px auto";
+                globalMode = 'stop';
             }, 600);
         }
 
         // ================= CINEMATIC HEART TRAIL ENGINE =================
         function triggerCinematicHeart() {
             document.getElementById('scr5').style.display = 'none';
-            document.getElementById('heartsBgContainer').style.display = 'none';
+            document.getElementById('bgCanvas').style.display = 'none';
             document.body.style.overflow = "hidden";
             
-            const canvas = document.getElementById('cinematicCanvas');
+            const canvasC = document.getElementById('cinematicCanvas');
             const overlay = document.getElementById('nameOverlay');
-            canvas.style.display = 'block';
+            canvasC.style.display = 'block';
             overlay.style.display = 'block';
 
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const ctxC = canvasC.getContext('2d');
+            canvasC.width = window.innerWidth;
+            canvasC.height = window.innerHeight;
 
             let particles = [];
             let heartPoints = [];
             let targetIndex = 0;
-            let centerWidth = canvas.width / 2;
-            let centerHeight = canvas.height / 2 - 20;
+            let centerWidth = canvasC.width / 2;
+            let centerHeight = canvasC.height / 2 - 20;
 
             for (let t = 0; t < Math.PI * 2; t += 0.03) {
                 let r = 13; 
@@ -323,21 +411,21 @@
 
             class AmbientSparkle {
                 constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
+                    this.x = Math.random() * canvasC.width;
+                    this.y = Math.random() * canvasC.height;
                     this.size = Math.random() * 2 + 1;
                     this.speedY = Math.random() * 0.5 + 0.2;
                     this.alpha = Math.random() * 0.5 + 0.2;
                 }
                 update() {
                     this.y -= this.speedY;
-                    if (this.y < 0) this.y = canvas.height;
+                    if (this.y < 0) this.y = canvasC.height;
                 }
                 draw() {
-                    ctx.fillStyle = `rgba(255, 100, 150, ${this.alpha})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctxC.fillStyle = `rgba(255, 100, 150, ${this.alpha})`;
+                    ctxC.beginPath();
+                    ctxC.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctxC.fill();
                 }
             }
 
@@ -352,15 +440,15 @@
                 }
                 update() { this.alpha -= this.decay; }
                 draw() {
-                    ctx.save();
-                    ctx.globalAlpha = this.alpha;
-                    ctx.shadowBlur = 12;
-                    ctx.shadowColor = this.color;
-                    ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
+                    ctxC.save();
+                    ctxC.globalAlpha = this.alpha;
+                    ctxC.shadowBlur = 12;
+                    ctxC.shadowColor = this.color;
+                    ctxC.fillStyle = this.color;
+                    ctxC.beginPath();
+                    ctxC.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctxC.fill();
+                    ctxC.restore();
                 }
             }
 
@@ -371,8 +459,8 @@
             let trailPoints = [];
 
             function animateLoop() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.12)'; 
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctxC.fillStyle = 'rgba(0, 0, 0, 0.12)'; 
+                ctxC.fillRect(0, 0, canvasC.width, canvasC.height);
 
                 particles.forEach(p => { p.update(); p.draw(); });
 
@@ -400,14 +488,14 @@
                         if (mainHeartScale <= 0.95) heartGrow = true;
                     }
 
-                    ctx.save();
-                    ctx.translate(centerWidth, centerHeight + 15);
-                    ctx.scale(mainHeartScale, mainHeartScale);
-                    ctx.shadowBlur = 30;
-                    ctx.shadowColor = '#ff2a6d';
-                    ctx.fillStyle = '#ff416c';
-                    ctx.beginPath();
-                    ctx.moveTo(0, -10);
+                    ctxC.save();
+                    ctxC.translate(centerWidth, centerHeight + 15);
+                    ctxC.scale(mainHeartScale, mainHeartScale);
+                    ctxC.shadowBlur = 30;
+                    ctxC.shadowColor = '#ff2a6d';
+                    ctxC.fillStyle = '#ff416c';
+                    ctxC.beginPath();
+                    ctxC.moveTo(0, -10);
                     ctx.bezierCurveTo(-25, -35, -55, -15, -55, 15);
                     ctx.bezierCurveTo(-55, 40, -25, 60, 0, 85);
                     ctx.bezierCurveTo(25, 60, 55, 40, 55, 15);
