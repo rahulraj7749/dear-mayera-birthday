@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>My Special Person, Dear Mayera ✨🎮</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght=1,500&display=swap" rel="stylesheet">
     <style>
@@ -21,7 +24,6 @@
             transition: background 0.8s ease;
         }
 
-        /* Music Controller Style */
         .music-ctrl {
             position: fixed; top: 15px; right: 15px; z-index: 100001;
             background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
@@ -31,7 +33,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Background Graphics Engine Canvas */
         #bgCanvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 1; pointer-events: none;
@@ -55,7 +56,6 @@
         .screen.active { display: block !important; }
         @keyframes popIn { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
 
-        /* Beautiful Dynamic Name Headers */
         .main-title { 
             font-family: 'Great Vibes', cursive; 
             font-size: 46px; 
@@ -73,24 +73,19 @@
             border: none; border-radius: 50px; color: white;
             font-size: 16px; font-weight: 600; cursor: pointer;
             box-shadow: 0 6px 25px rgba(255, 65, 108, 0.5); text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-link:active { transform: scale(0.97); }
 
-        /* Balloon Elements */
         .balloon-area { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 5; }
         .balloon { position: absolute; width: 50px; height: 65px; cursor: pointer; pointer-events: auto; animation: floatUpGame 4s linear forwards; }
         .balloon::after { content: "🎈"; font-size: 50px; position: absolute; top: -10px; left: 0; }
         @keyframes floatUpGame { from { bottom: -100px; } to { bottom: 105vh; } }
 
-        /* Magic Interaction Zone */
         .wand { font-size: 60px; cursor: pointer; display: inline-block; animation: shake 0.5s infinite alternate; }
         @keyframes shake { from { transform: rotate(0deg); } to { transform: rotate(20deg); } }
 
         .cake-box { font-size: 80px; margin: 20px 0; position: relative; display: inline-block; }
         .flame { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 24px; }
 
-        /* Ultimate Reveal Present Card */
         .letter-card {
             background: #ffffff; color: #222; padding: 32px 22px; border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6); text-align: center; margin-bottom: 25px; width: 100%;
@@ -109,7 +104,6 @@
         }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
 
-        /* Final High-End Cinematic Screen Canvas */
         #cinematicCanvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 99999; display: none;
@@ -203,9 +197,8 @@
         let poppedCount = 0;
         let balloonInterval;
         let wandClicks = 0;
-        let globalMode = 'fireworks'; // 'fireworks', 'hearts', or 'stop'
+        let globalMode = 'fireworks';
 
-        // ================= MATHEMATICAL VECTOR CANVAS ENGINE =================
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let fwParticles = [];
@@ -218,7 +211,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // 1. Fireworks Particle Builder
         class FWParticle {
             constructor(x, y, color) {
                 this.x = x; this.y = y;
@@ -233,7 +225,7 @@
             }
             update() {
                 this.x += this.vx; this.y += this.vy;
-                this.vy += 0.04; // gravity force
+                this.vy += 0.04;
                 this.alpha -= this.decay;
             }
             draw() {
@@ -249,17 +241,15 @@
             }
         }
 
-        // 2. GLOWING VECTOR HEART BUILDER (No more broken emoji hearts!)
+        // PURE MATH VECTOR HEART VECTOR LAYER (NEVER BREAKS)
         class VectorHeart {
             constructor() {
                 this.x = Math.random() * canvas.width;
-                this.y = canvas.height + 30;
-                this.scale = Math.random() * 0.6 + 0.4;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 12 + 10;
                 this.speedY = Math.random() * 1.5 + 0.8;
-                this.vx = Math.sin(Math.random() * Math.PI) * 0.25;
-                this.alpha = Math.random() * 0.5 + 0.3;
-                // Soft elegant romantic birthday hues
-                this.color = Math.random() > 0.5 ? 'rgba(255, 65, 108, ' : 'rgba(255, 75, 110, ';
+                this.vx = Math.sin(Math.random() * Math.PI) * 0.2;
+                this.alpha = Math.random() * 0.6 + 0.3;
             }
             update() {
                 this.y -= this.speedY;
@@ -268,27 +258,24 @@
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
-                ctx.translate(this.x, this.y);
-                ctx.scale(this.scale, this.scale);
-                
-                // Pure Canvas Path Heart Drafting Engine
-                ctx.beginPath();
-                ctx.moveTo(0, -6);
-                ctx.bezierCurveTo(-10, -20, -25, -10, -25, 10);
-                ctx.bezierCurveTo(-25, 25, -10, 38, 0, 50);
-                ctx.bezierCurveTo(10, 38, 25, 25, 25, 10);
-                ctx.bezierCurveTo(25, -10, 10, -20, 0, -6);
-                ctx.closePath();
-                
-                ctx.fillStyle = this.color + '1)';
+                ctx.fillStyle = "#ff416c";
                 ctx.shadowBlur = 10;
-                ctx.shadowColor = '#ff416c';
+                ctx.shadowColor = "#ff4b2b";
+                
+                // Vector geometry drafting - Drawing a flawless canvas path
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y + this.size / 4);
+                ctx.quadraticCurveTo(this.x, this.y, this.x + this.size / 2, this.y);
+                ctx.quadraticCurveTo(this.x + this.size, this.y, this.x + this.size, this.y + this.size / 3);
+                ctx.quadraticCurveTo(this.x + this.size, this.y + (this.size * 2) / 3, this.x + this.size / 2, this.y + this.size);
+                ctx.quadraticCurveTo(this.x, this.y + (this.size * 2) / 3, this.x, this.y + this.size / 3);
+                ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + this.size / 4);
+                ctx.closePath();
                 ctx.fill();
                 ctx.restore();
             }
         }
 
-        // Interval Generators
         setInterval(() => {
             if(globalMode !== 'fireworks') return;
             let startX = canvas.width / 4 + Math.random() * (canvas.width / 2);
@@ -305,7 +292,6 @@
             vectorHearts.push(new VectorHeart());
         }, 300);
 
-        // Core Render Dynamic Loop
         function runGlobalEngine() {
             if(globalMode === 'fireworks') {
                 ctx.fillStyle = 'rgba(9, 9, 22, 0.25)';
@@ -321,14 +307,13 @@
 
             vectorHearts.forEach((h, idx) => {
                 h.update(); h.draw();
-                if(h.y < -60) vectorHearts.splice(idx, 1);
+                if(h.y < -40) vectorHearts.splice(idx, 1);
             });
 
             requestAnimationFrame(runGlobalEngine);
         }
         runGlobalEngine();
 
-        // ================= CONTROL SYSTEM MECHANICS =================
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
             const btn = document.getElementById('musicBtn');
@@ -346,7 +331,7 @@
             const btn = document.getElementById('musicBtn');
             music.play().then(() => {
                 btn.innerText = "⏸️ Pause Music";
-            }).catch(err => console.log("System audio trigger standard bypass"));
+            }).catch(err => console.log("Audio live"));
             
             globalMode = 'hearts'; 
             document.body.style.background = "linear-gradient(135deg, #f76b1c, #fad961)";
@@ -404,7 +389,6 @@
             }, 600);
         }
 
-        // ================= CINEMATIC FINAL CANVAS MATRIX =================
         function triggerCinematicHeart() {
             document.getElementById('scr5').style.display = 'none';
             document.getElementById('bgCanvas').style.display = 'none';
@@ -519,10 +503,10 @@
                     ctxC.fillStyle = '#ff416c';
                     ctxC.beginPath();
                     ctxC.moveTo(0, -10);
-                    ctx.bezierCurveTo(-25, -35, -55, -15, -55, 15);
-                    ctx.bezierCurveTo(-55, 40, -25, 60, 0, 85);
-                    ctx.bezierCurveTo(25, 60, 55, 40, 55, 15);
-                    ctx.bezierCurveTo(55, -15, 25, -35, 0, -10);
+                    ctxC.bezierCurveTo(-25, -35, -55, -15, -55, 15);
+                    ctxC.bezierCurveTo(-55, 40, -25, 60, 0, 85);
+                    ctxC.bezierCurveTo(25, 60, 55, 40, 55, 15);
+                    ctxC.bezierCurveTo(55, -15, 25, -35, 0, -10);
                     ctx.closePath();
                     ctx.fill();
                     ctx.restore();
